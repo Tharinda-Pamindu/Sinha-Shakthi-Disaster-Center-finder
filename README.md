@@ -1,5 +1,7 @@
 # සිංහ ශක්ති (Sinha Shakthi) - Disaster Center Finder
 
+<img src="assests/sinha_logo.png" width="100%"> <br> <hr>
+
 A full-stack web application for finding and managing disaster relief centers using Google Maps API and Prisma database.
 
 **සිංහ ශක්ති** (Sinha Shakthi) means "Lion's Strength" in Sinhala, representing the strength and resilience of communities in times of disaster.
