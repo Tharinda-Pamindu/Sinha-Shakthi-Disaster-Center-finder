@@ -53,11 +53,27 @@ export function getCurrentLocation(): Promise<UserLocation> {
         })
       },
       (error) => {
-        reject(error)
+        let errorMessage = 'Failed to get your location'
+        
+        switch (error.code) {
+          case error.PERMISSION_DENIED:
+            errorMessage = 'Location permission denied. Please enable location access in your browser settings.'
+            break
+          case error.POSITION_UNAVAILABLE:
+            errorMessage = 'Location information is unavailable. Please check your device settings.'
+            break
+          case error.TIMEOUT:
+            errorMessage = 'Location request timed out. Please try again.'
+            break
+          default:
+            errorMessage = `Location error: ${error.message || 'Unknown error occurred'}`
+        }
+        
+        reject(new Error(errorMessage))
       },
       {
         enableHighAccuracy: true,
-        timeout: 5000,
+        timeout: 10000, // Increased timeout to 10 seconds
         maximumAge: 0,
       }
     )

@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState, useCallback, useEffect } from 'react'
-import { GoogleMap, LoadScript, Marker, InfoWindow } from '@react-google-maps/api'
+import { GoogleMap, LoadScript, MarkerF, InfoWindow } from '@react-google-maps/api'
 import { DisasterCenterWithDistance } from '@/types'
 
 interface MapComponentProps {
@@ -17,8 +17,8 @@ const mapContainerStyle = {
 }
 
 const defaultCenter = {
-  lat: 37.7749,
-  lng: -122.4194,
+  lat: 6.9271, // Colombo, Sri Lanka as default
+  lng: 79.8612,
 }
 
 export default function MapComponent({
@@ -54,8 +54,26 @@ export default function MapComponent({
     }
   }
 
+  // Custom marker icons using SVG data URLs
+  const createCustomIcon = (color: string, emoji: string) => {
+    const svg = `
+      <svg width="48" height="48" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="24" cy="24" r="20" fill="${color}" stroke="white" stroke-width="3"/>
+        <text x="24" y="24" font-size="24" text-anchor="middle" dominant-baseline="central">${emoji}</text>
+      </svg>
+    `
+    return {
+      url: 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(svg),
+      scaledSize: new google.maps.Size(48, 48),
+      anchor: new google.maps.Point(24, 24),
+    }
+  }
+
   return (
-    <LoadScript googleMapsApiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || ''}>
+    <LoadScript 
+      googleMapsApiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || ''}
+      version="weekly"
+    >
       <GoogleMap
         mapContainerStyle={mapContainerStyle}
         center={center}
@@ -66,41 +84,35 @@ export default function MapComponent({
       >
         {/* User Location Marker */}
         {userLocation && (
-          <Marker
+          <MarkerF
             position={{
               lat: userLocation.latitude,
               lng: userLocation.longitude,
             }}
-            icon={{
-              url: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png',
-            }}
+            icon={createCustomIcon('#3B82F6', '📍')}
             title="Your Location"
           />
         )}
 
         {/* Selected Location Marker (for adding new center) */}
         {selectedLocation && (
-          <Marker
+          <MarkerF
             position={selectedLocation}
-            icon={{
-              url: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
-            }}
+            icon={createCustomIcon('#10B981', '📌')}
             title="Selected Location"
           />
         )}
 
         {/* Disaster Center Markers */}
         {centers.map((center) => (
-          <Marker
+          <MarkerF
             key={center.id}
             position={{
               lat: center.latitude,
               lng: center.longitude,
             }}
             onClick={() => setSelectedCenter(center)}
-            icon={{
-              url: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png',
-            }}
+            icon={createCustomIcon('#DC2626', '🚨')}
             title={center.name}
           />
         ))}
