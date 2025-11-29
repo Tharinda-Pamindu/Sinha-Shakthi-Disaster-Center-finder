@@ -5,8 +5,8 @@ import './globals.css'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Disaster Center Finder',
-  description: 'Find and locate disaster relief centers near you',
+  title: 'සිංහ ශක්ති | Sinha Shakthi - Disaster Center Finder',
+  description: 'Find and locate disaster relief centers near you | සිංහ ශක්ති',
 }
 
 export default function RootLayout({
@@ -15,8 +15,10 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
-      <body className={inter.className}>{children}</body>
+    <html lang="en" suppressHydrationWarning>
+      <body className={inter.className} suppressHydrationWarning>
+        {children}
+      </body>
     </html>
   )
 }
