@@ -149,9 +149,18 @@ export default function Home() {
     <main className="min-h-screen bg-gray-50">
       {/* Header */}
       <header className="bg-primary text-white shadow-lg">
-        <div className="container mx-auto px-4 py-6">
-          <h1 className="text-3xl font-bold">🚨 සිංහ ශක්ති | Sinha Shakthi</h1>
-          <p className="text-sm mt-2">Disaster Center Finder - Locate and add disaster relief centers in your area</p>
+        <div className="container mx-auto px-4 py-4">
+          <div className="flex items-center gap-4">
+            <img 
+              src="/lion.png" 
+              alt="Sinha Shakthi Logo" 
+              className="h-16 w-16 object-contain"
+            />
+            <div className="flex-1">
+              <h1 className="text-3xl font-bold">සිංහ ශක්ති | Sinha Shakthi</h1>
+              <p className="text-sm mt-1">Disaster Center Finder - Locate and add disaster relief centers in your area</p>
+            </div>
+          </div>
         </div>
       </header>
 
